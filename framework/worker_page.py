@@ -81,3 +81,4 @@ class PageWorker:
 
     def reset(self):
         return self.test_logout()
+    

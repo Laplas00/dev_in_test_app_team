@@ -46,6 +46,10 @@ class TestUserUsage(PageWorker, SidebarPage, SpacePage):
         attempt = self.test_change_photo()
         return attempt
         
+    def change_name(self):
+        self.check_user_login()
+        attempt = self.test_change_name()
+        return attempt
 
     def change_theme(self):
         self.check_user_login()

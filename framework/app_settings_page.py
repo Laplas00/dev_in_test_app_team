@@ -19,11 +19,11 @@ class AppSettingsPage:
         self.find_and_click(self.get_res_element_id('save_avatar_image_button'))
         return True
         
-    def test_name_changing(self):
+    def test_change_name(self):
         self.logger.info('Start to test "Name changing"')
         self.find_and_click(self.get_res_element_id('change_name_field'))
         self.clear_text_field()
-        self.text_input('JustBeBetter')
+        self.text_input('OnlyUp')
         self.find_and_click(self.get_res_element_id('return_back_button'))
         return True
 
