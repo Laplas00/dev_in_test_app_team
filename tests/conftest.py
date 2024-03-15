@@ -1,10 +1,11 @@
 import subprocess
 import time
-
 import pytest
 from appium import webdriver
 
 from utils.android_utils import android_get_desired_capabilities
+
+from framework.user_actions import TestUserUsage
 
 
 @pytest.fixture(scope='session')
@@ -21,10 +22,22 @@ def run_appium_server():
 
 @pytest.fixture(scope='session')
 def driver(run_appium_server):
-    result = subprocess.run("adb shell getprop ro.serialno", shell=True, capture_output=True, text=True)
-    udid = result.stdout.strip()
-    driver = webdriver.Remote('http://localhost:4723', options=android_get_desired_capabilities(udid))
+    # result = subprocess.run("adb shell getprop ro.serialno", shell=True, capture_output=True, text=True)
+    # udid = result.stdout.strip()
+    driver = webdriver.Remote('http://localhost:4723', options=android_get_desired_capabilities())
     yield driver
+    driver.quit()
+
+
+
+@pytest.fixture(scope='session')
+def user_actions(driver):
+    '''
+        Создаю основной класс для управления приложением.
+        Благодаря лучшей отслеживаемости, могу знать что происходит с приложением
+        + не создаю лишние файлы 
+    '''
+    yield TestUserUsage(driver)
 
 
 
