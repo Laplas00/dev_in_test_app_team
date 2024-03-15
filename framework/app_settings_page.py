@@ -1,15 +1,20 @@
 from random import randint
-class AppSettingsPage:
-    def test_open_edit_account_button(self):
+
+
+
+class AppSettingsPage:  
+    def test_open_edit_account(self):
         self.logger.info('Start to test "Edit account"')
         self.find_and_click(self.get_res_element_id('edit_account_button'))
         return True
     
-    
-    def test_photo_changing(self):
+
+    def test_change_photo(self):
         self.logger.info('Start to test "Photo change"')
         self.find_and_click(self.get_res_element_id('upload_image_button'))
+        self.logger.info('Click for the upload image is set')
         self.click_element_by_xy(350, 1150)
+        self.logger.info('Click by cords xy to set photo')
         self.scroll_by_coords(500, 800, 100)
         self.find_and_click(self.get_res_element_id('save_avatar_image_button'))
         return True

@@ -1,11 +1,8 @@
 from selenium.common.exceptions import TimeoutException
 import subprocess
 
-from .page import Page
 
-
-
-class LogoutPage(Page):
+class LogoutPage:
     def logout(self):
         try:
             self.find_element(self.get_res_element_id('menu_button'))
