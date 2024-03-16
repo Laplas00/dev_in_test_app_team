@@ -3,15 +3,16 @@ import time
 import pytest
 from appium import webdriver
 
-from utils.android_utils import android_get_desired_capabilities
-
+from utils.android_utils import android_get_desired_capabilities, get_device_udid
 from framework.user_actions import TestUserUsage
+
 
 
 @pytest.fixture(scope='session')
 def run_appium_server():
+    f_device_udid = get_device_udid()
     subprocess.Popen(
-        ['appium', '-a', '0.0.0.0', '-p', '4723', '--allow-insecure', 'adb_shell'],
+        ['appium', '-a', '0.0.0.0', '-p', '4723', '--allow-insecure', 'adb_shell', '--udid', f_device_udid],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
         stdin=subprocess.DEVNULL,
@@ -22,12 +23,9 @@ def run_appium_server():
 
 @pytest.fixture(scope='session')
 def driver(run_appium_server):
-    # result = subprocess.run("adb shell getprop ro.serialno", shell=True, capture_output=True, text=True)
-    # udid = result.stdout.strip()
     driver = webdriver.Remote('http://localhost:4723', options=android_get_desired_capabilities())
     yield driver
     driver.quit()
-
 
 
 @pytest.fixture(scope='session')
@@ -38,7 +36,3 @@ def user_actions(driver):
         + не создаю лишние файлы 
     '''
     yield TestUserUsage(driver)
-
-
-
-

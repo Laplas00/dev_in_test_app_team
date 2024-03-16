@@ -1,21 +1,15 @@
-from selenium.common.exceptions import TimeoutException
 import subprocess
 
 
-class LogoutPage:
-    def logout(self):
-        try:
-            self.find_element(self.get_res_element_id('menu_button'))
-            self.click_element()
-            self.find_element(self.get_res_element_id('app_settings_button'))
-            self.click_element()
-            command = f"adb shell input swipe 500 1000 500 500 200"
-            subprocess.run(command, shell=True)
-            self.find_element(self.get_res_element_id('logout_button'))
-            self.click_element()
-            self.logger.info("Attempt to logout success")
-            return True  
 
-        except TimeoutException:
-            self.logger.info("Attempt to logout failed")
-            return False
+class LogoutPage:
+    def test_logout(self):
+        self.logger.debug('"Start test logout"')
+        self.find_and_click('menu_button')
+        self.find_and_click('app_settings_button')
+        command = f"adb shell input swipe 500 1000 500 500 200"
+        subprocess.run(command, shell=True)
+        self.find_and_click('logout_button')
+        self.logger.info("Attempt to logout success")
+        self.user_logged_in = False
+        return True  
