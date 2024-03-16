@@ -1,32 +1,17 @@
 import pytest
-from utils import basic_loger
+from utils.correct_login_data import u, p
 
 
-logger = basic_loger.setup_logger('logs.log')   
+email, password = u, p 
 
-
-
-
-<<<<<<< Updated upstream
+@pytest.mark.order(18)
 @pytest.mark.parametrize("username, password, expected_result", [
-    ("qa.ajax.app.automation@gmail.com", "qa_automation_password", True),    
     ("invalid_username@gm.co", "invalid_password", False),                   
+    (email, password, True),    
     ])
-def test_correct_login(user_actions, username, password, expected_result):
-=======
-# @pytest.mark.parametrize("username, password, expected_result", [
-#     ("This_is_pass111", "This_is_pass111", True),    
-#     ("invalid_username@gm.co", "invalid_password", False),                   
-#     ])
-# def test_correct_login(user_actions, username, password, expected_result):
->>>>>>> Stashed changes
-    
+def test_correct_login(user_actions, username, password, expected_result):    
+    if user_actions.user_logged_in:
+        user_actions.logout()
     attempt = user_actions.login(username, password)
-    logger.info("Attempt: {}".format(attempt))
-
-    if attempt:
-        logger.info("Login success, time to logout ")
-        user_actions.reset()
-
     assert attempt == expected_result
 
